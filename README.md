@@ -7,8 +7,8 @@
 ### Table Of Contents
 
 - [Description](#description)
-- [Requirements Gathering and Analysis](#requirements-gathering-and-analysis)
-- [Technologies](#technonologies)
+- [Process](#process)
+- [Languages](#languages)
 
 ---
 
@@ -22,8 +22,11 @@ In this project,  expected to determine a real-world problem and solve the probl
 
 ---
 
-## Requirements Gathering and Analysis
+## Process
 
+Once the problem has been identified, it is now necessary to gather the requirements for your solution.It is necessary to identify and document both functional and non-functional requirements.The functional requirements must be specified with a UML use case diagram, and non-functional requirements must be documented with a Volere template.
+
+It makes and documents architectural design decisions from the structural, behavioral and interaction point of view.First document the design decisions in a natural language (ie English) and then the informal model is converted to a more precise model.XCD is used official software architecture modeling language.It is expected to consider using architectural styles and confirm the choice of style.
 
 
 
@@ -31,10 +34,10 @@ In this project,  expected to determine a real-world problem and solve the probl
 
 ---
 
-## Techonologies
+## Languages
 
-- Techonology 1
-- Techonology 2
+- XCD ( formal software architecture modeling language)
+- Java (implementation)
 
 
 ### [Back To The Top](#Software-Architecture-for-Natural-Disaster)
