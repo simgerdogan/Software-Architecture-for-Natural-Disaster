@@ -12,7 +12,7 @@
 ---
 ## Description
 
-
+In this project,  expected to determine a real-world problem and solve the problem by performing an architecture-centric software development including such activities as problem identification, requirements modeling, architectural design, generating code from the design decisions.
 
 
 
