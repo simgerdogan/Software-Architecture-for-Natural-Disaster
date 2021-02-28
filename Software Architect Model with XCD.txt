@@ -1,0 +1,618 @@
+enum User := {None,Single,Pair};
+enum TaskName := {Tr,Ac,Wa,Fo,Ot};
+enum Campaign := {Off,On};
+enum Task := {Off,On};
+enum Info := {Off,On};
+enum Forum := {Off,On};
+
+typedef byte ID;
+
+
+//COMPONENT ShowInfo+
+
+component ShowInfo(){
+
+  bool eleleClick := false;
+  User chosenUser :=  Single;
+
+  consumer port TaskElele{
+    @interaction{
+      waits: ! eleleClick;
+    }
+    @functional{
+      ensures:  eleleClick := true;
+                chosenUser[task]:= user ;
+    }
+      validTaskInfo(Task task,User user);
+}consumer port CampaignElele{
+    @interaction{
+      waits: ! eleleClick;
+    }
+    @functional{
+      ensures:  eleleClick := true;
+                chosenUser := campaign[@];
+    }
+    validCampaign(Campaign campaign);
+}
+  consumer port ForumElele{
+    @interaction{
+      waits: ! eleleClick;
+    }
+    @functional{
+      ensures:  eleleClick := true;
+                chosenUser := forum[@];
+    }
+    validEntry(Forum forum);
+}
+  consumer port InfoElele{
+    @interaction{
+      waits: ! eleleClick;
+    }
+    @functional{
+      ensures:  eleleClick := true;
+                chosenUser := info[@];
+    }
+    validInfo(Info info);
+}
+  consumer port AwareElele{
+    @interaction{
+      waits: ! eleleClick;
+    }
+    @functional{
+      ensures:  eleleClick := true;
+                chosenUser := user[@];
+    }
+   validAware(User user);
+}
+  consumer port SosElele{
+    @interaction{
+      waits: ! eleleClick;
+    }
+    @functional{
+      ensures:  eleleClick := true;
+
+    }
+   validSos();
+}
+  consumer port OfflineElele{
+    @interaction{
+      waits: ! eleleClick;
+    }
+    @functional{
+      ensures:  eleleClick := true;
+
+    }
+   validOffline();
+}
+}
+
+
+//COMPONENT TASK+
+component Task(){
+
+  bool requestClick := false;
+  bool isTaskAvailable := false;
+  User chosenUser :=  Single,Pair;
+  Task noTask[N] := None;
+  bool chosenTask := On;
+
+  emitter port ShowElele{
+      Task TaskType[3] := Wa,Fo,Ot;
+      @interaction{
+      waits: !requestClick;
+      }
+      @functional{
+      promises: task;
+                user;
+      ensures:  requestClick := true;
+                chosenTask[task] := user;
+      }
+      validTaskInfo(Task task,User user);
+  }
+
+
+  provided port showTask{
+    Task TaskType[5] := Tr,Ac,Wa,Fo,Ot;
+    @interaction{
+      accepts: requestClick==true;
+    }
+    @functional{
+    requires: requestClick != None;
+    ensures: isTaskAvailable[@]:=true;
+  	otherwise
+  	requires: requestClick == None;
+  	throws: NoTaskException;
+    }
+    Task validTask() throws NoTaskException;
+  }
+
+  required port requestCommiTask{
+    Task TaskType[2] := Tr,Ac;
+    bool requestClick := false;
+    @interaction{
+      waits: requestClick==true;
+    }
+    @functional{
+      promises: \nothing;
+         requires: \result == TaskName[@];
+         ensures: requestClick:=false;
+         otherwise:
+         requires: !(\result == TaskName[@]);
+         ensures: \nothing;
+         otherwise:
+         requires: !(\exception == NoTaskEleleException);
+         ensures: \nothing;
+    }
+    Task validTaskElele() throws NoTaskEleleException;
+}
+
+
+
+
+//COMPONENT ADD+
+
+  component Add(){
+
+      required port clickAdd{
+        bool requestAdd := false;
+        @interaction{
+          waits: requestAdd==true;
+      }
+      @functional{
+        promises: \nothing;
+           requires: \result == TaskName[@];
+           ensures: requestAdd:=false;
+           otherwise:
+           requires: !(\result == TaskName[@]);
+           ensures: \nothing;
+           otherwise:
+           requires: !(\exception == NoTaskException);
+           ensures: \nothing;
+      }
+      Task validTask() throws NoTaskException;
+  }
+}
+
+//COMPONENT CAMPAIGN+
+
+  component Campaign(){
+
+    bool campaignClick := false;
+    bool chosenCampaign := On;
+    User chosenUser :=  Single;
+
+    emitter port showCampaign{
+      @interaction{
+      waits: !campaignClick;
+      }
+      @functional{
+      promises: campaign;
+      ensures:  campaignClick := true;
+                chosenCampaign := campaign[@];
+      }
+      validCampaign(Campaign campaign);
+  }
+
+}
+
+//COMPONENT FORUM+
+
+  component Forum(){
+    bool forumClick := false;
+    Forum chosenForum := On;
+    User chosenUser :=  Single;
+
+    emitter port showEntry{
+      @interaction{
+      waits: !forumClick;
+      }
+      @functional{
+      promises: forum;
+      ensures:  forumClick := true;
+                chosenForum:= forum[@];
+      }
+      validEntry(Forum forum);
+  }
+
+  required port requestCommiForum{
+    bool requestClick := false;
+    Forum chosenForum := On;
+    @interaction{
+      waits: requestClick==true;
+    }
+    @functional{
+      promises: \nothing;
+         requires: !(\result == chosenForum[@]);
+         ensures: \nothing;
+         otherwise:
+         requires: (\result == chosenForum[@]);
+         ensures: requestClick:=false;
+         otherwise:
+         requires: !(\exception == NoForumEleleException);
+         ensures: \nothing;
+    }
+    Forum validForumElele() throws NoForumEleleException;
+    }
+}
+
+//COMPONENT COMMUNICATION+
+component Comminucation(){
+  bool requestClick := false;
+  bool isCommiAvailable := false;
+
+  provided port showCommiTask{
+    Task TaskType[2] := Tr,Ac;
+      @interaction{
+        accepts: requestClick==true;
+      }
+      @functional{
+      requires: requestClick != None;
+      ensures: isCommiAvailable[@]:=true;
+    	     \result := commiNum[@];
+    	otherwise
+    	requires: requestClick == None;
+    	throws: NoTaskEleleException;
+      }
+    Task validTaskElele() throws NoTaskEleleException;
+  }
+
+  provided port showCommiForum{
+    @interaction{
+      accepts: requestClick==true;
+    }
+    @functional{
+    requires: requestClick != None;
+    ensures: isCommiAvailable[@]:=true;
+         \result := commiNum[@];
+    otherwise
+    requires: requestClick == None;
+    throws: NoForumEleleException;
+    }
+  Forum validForumElele() throws NoForumEleleException;
+  }
+}
+
+//COMPONENT EDITINFO+
+component EditInfo(){
+    bool infoClick := false;
+
+    emitter port showInfo{
+      @interaction{
+      waits: !infoClick;
+      }
+      @functional{
+      promises: info;
+      ensures:  infoClick := true;
+                chosenInfo := info[@];
+      }
+      validInfo(Info info);
+    }
+}
+
+//COMPONENT GETAWARE+
+component GetAware(){
+    User chosenUser :=  Single;
+    bool awareClick := false;
+
+    emitter port Aware{
+      @interaction{
+      waits: !awareClick;
+      }
+      @functional{
+      promises: user;
+      ensures:  awareClick := true;
+                chosenUser := user[@];
+      }
+      validAware(User user);
+    }
+}
+
+
+
+//COMPONENT SIGNUP
+
+component SignUp(){
+
+  required port requestSignUp{
+    bool requestClick := false;
+    User chosenUser := Single;
+    @interaction{
+      waits: requestClick==true;
+    }
+    @functional{
+      promises: \nothing;
+         requires: !(\result == chosenUser[@]);
+         ensures: \nothing;
+         otherwise:
+         requires: (\result == chosenUser[@]);
+         ensures:  requestClick := true;
+                   chosenUser := userId[@];
+         otherwise:
+         requires: !(\exception == AlreadyException);
+         ensures: \nothing;
+    }
+    User validUser() throws AlreadyException;
+  }
+
+}
+
+//COMPONENT SIGNIN+
+component SignIn(){
+
+  bool requestClick := false;
+  User chosenUser := Single;
+  bool isSignAvailable := false;
+  bool currentUser := true;
+  bool currentPassword := true;
+
+  provided port receiveSignIn{
+    @interaction{
+      accepts: requestClick==true;
+    }
+    @functional{
+    requires: currentUser;
+              currentPassword;
+    ensures: isSignAvailable[@]:= false;
+         \result := userId[@];
+    otherwise:
+    throws: AlreadyException;
+    }
+  User validUser() throws AlreadyException;
+  }
+
+  required port requestSignout{
+    @interaction{
+      waits: requestClick==true;
+    }
+    @functional{
+      promises: \nothing;
+         requires: !(\result == chosenUser[@]);
+         ensures: \nothing;
+         otherwise:
+         requires: (\result == chosenUser[@]);
+         ensures:  requestClick := true;
+                   chosenUser := userId[@];
+         otherwise:
+         requires: !(\exception == NoSignInException);
+         ensures: \nothing;
+    }
+    User validSignUser() throws NoSignInException;
+    }
+}
+
+//COMPONENT SIGNOUT+
+component SignOut(){
+
+  bool requestClick := false;
+  User chosenUser[2] := Single,None;
+  bool isSignInAvailable := true;
+  bool currentUser := true;
+
+  provided port receiveSignout{
+    @interaction{
+      accepts: requestClick==true;
+    }
+    @functional{
+    requires: isSignInAvailable;
+    ensures: chosenUser[@] := None ;
+    otherwise:
+    throws: NoSignInException;
+    }
+    User validSignUser() throws NoSignInException;
+  }
+}
+
+//COMPONENT SOS+
+component Sos(){
+  bool sosClick := false;
+
+  emitter port GetSos{
+    @interaction{
+    waits: !sosClick;
+    }
+    @functional{
+    promises: \nothing;
+    ensures:  sosClick := true;
+    }
+    validSos();
+  }
+}
+
+//COMPONENT OFFLINE EARTHQUAKE+
+component OfflineEarth(){
+
+  bool offlineClick := false;
+
+  emitter port Offline{
+    @interaction{
+    waits: !offlineClick;
+    }
+    @functional{
+    promises: \nothing;
+    ensures:  offlineClick := true;
+
+    }
+    validOffline();
+  }
+}
+
+
+
+
+//REQUIRED VE PROVIDED CONNECTORS
+
+connector Add2Task(Add{clickAdd},Task{showTask}){
+  role Add {
+    required port_variable clickAdd{
+      void validTask();
+    }
+  }
+  role Task {
+    provided port_variable showTask{
+      void validTask();
+    }
+  }
+  connector add2task_validTask(Add{clickAdd},Task{showTask});
+}
+
+
+connector Forum2Communication(Forum{requestCommiForum},Comminucation{showCommiForum}){
+  role Forum {
+    required port_variable requestCommiForum{
+      void validForumElele();
+    }
+  }
+  role Comminucation {
+    provided port_variable showCommiForum{
+      void validForumElele();
+    }
+  }
+  connector forum2com_validForumElele(Forum{requestCommiForum},Comminucation{showCommiForum});
+}
+
+
+connector Task2Communication(Task{requestCommiTask},Comminucation{showCommiTask}){
+  role Task{
+    required port_variable requestCommiTask{
+      void validTaskElele();
+    }
+  }
+  role Comminucation {
+    provided port_variable showCommiTask{
+      void validTaskElele();
+    }
+  }
+  connector task2com_validTaskElele()(Task{requestCommiTask},Comminucation{showCommiTask});
+}
+
+
+connector SignUp2SignIn(SignUp{requestSignUp},SignIn{receiveSignIn}){
+  role SignUp{
+    required port_variable requestSignUp{
+      void validUser();
+    }
+  }
+  role SignIn {
+    provided port_variable receiveSignIn{
+      void validUser();
+    }
+  }
+  connector signup2signin_validUser()(SignUp{requestSignUp},SignIn{receiveSignIn});
+}
+
+
+connector SignIn2SignOut(SignIn{validSignUser()},SignOut{receiveSignout}){
+  role SignIn{
+    required port_variable validSignUser{
+      void validSignUser();
+    }
+  }
+  role SignOut {
+    provided port_variable receiveSignout{
+      void validSignUser();
+  }
+  }
+  connector signing2signout_validSignUser()(SignIn{validSignUser()},SignOut{receiveSignout});
+}
+
+//EMITTER VE CONSUMER CONNECTORS
+connector Task2ShowInfo(Task{ShowElele()},ShowInfo{TaskElele}){
+  role Task{
+    emitter port_variable ShowElele{
+       validTaskInfo(Task[],User[]);
+    }
+  }
+  role ShowInfo {
+    consumer port_variable TaskElele{
+        validTaskInfo(Task[],User[]);
+  }
+  }
+  connector task2showinfo_validTaskElele()(Task{ShowElele()},ShowInfo{TaskElele});
+}
+
+
+connector Campaign2ShowInfo(Campaign{showCampaign()},ShowInfo{CampaignElele}){
+  role Task{
+    emitter port_variable showCampaign({
+       validCampaign(Campaign[]);
+    }
+  }
+  role ShowInfo {
+    consumer port_variable CampaignElele{
+        validCampaign(Campaign[]);
+  }
+  }
+  connector campaign2showinfo_validCampaign()(Campaign{showCampaign()},ShowInfo{CampaignElele});
+}
+
+connector Forum2ShowInfo(Forum{showEntry()},ShowInfo{ForumElele}){
+  role Forum{
+    emitter port_variable showEntry({
+       validEntry(Forum[]);
+    }
+  }
+  role ShowInfo {
+    consumer port_variable ForumElele{
+   validEntry(Forum[]);
+  }
+  }
+  connector forum2showinfo_validEntry()(Forum{showEntry()},ShowInfo{ForumElele});
+}
+
+connector EditInfo2ShowInfo(EditInfo{showInfo()},ShowInfo{InfoElele}){
+  role EditInfo{
+    emitter port_variable showInfo({
+       validInfo(Info[]);
+    }
+  }
+  role ShowInfo {
+    consumer port_variable InfoElele{
+     validInfo(Info[]);
+  }
+  }
+  connector editinfo2showinfo_validInfo()(EditInfo{showInfo()},ShowInfo{InfoElele});
+}
+
+
+connector GetAware2ShowInfo(GetAware{Aware()},ShowInfo{AwareElele}){
+  role GetAware{
+    emitter port_variable Aware({
+       validAware(User[]);
+    }
+  }
+  role ShowInfo {
+    consumer port_variable AwareElele{
+     validAware(User[]);
+  }
+  }
+  connector getaware2showinfo_validAware()(GetAware{Aware()},ShowInfo{AwareElele});
+}
+
+connector Sos2ShowInfo(Sos{GetSos()},ShowInfo{SosElele}){
+  role (Sos{
+    emitter port_variable GetSos({
+       validSos();
+    }
+  }
+  role ShowInfo {
+    consumer port_variable SosElele{
+    validSos();
+  }
+  }
+  connector sos2showinfo_validSos()(GetAware{Aware()},ShowInfo{AwareElele});
+}
+
+
+connector OfflineEarth2ShowInfo(OfflineEarth{Offline()},ShowInfo{OfflineElele}){
+  role OfllineEarth{
+    emitter port_variable Offline({
+       validOffline();
+    }
+  }
+  role ShowInfo {
+    consumer port_variable OfflineElele{
+     validOffline();
+  }
+  }
+  connector offlineearth2showinfo_validOffline()(OfflineEarth{Offline()},ShowInfo{OfflineElele);
+}
