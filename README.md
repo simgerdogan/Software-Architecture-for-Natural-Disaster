@@ -7,7 +7,7 @@
 ### Table Of Contents
 
 - [Description](#description)
-- [How to Use](#how-to-use)
+- [Requirements Gathering and Analysis](#requirements-gathering-and-analysis)
 - [Technologies](#technonologies)
 
 ---
@@ -22,7 +22,7 @@ In this project,  expected to determine a real-world problem and solve the probl
 
 ---
 
-## How to Use
+## Requirements Gathering and Analysis
 
 
 
