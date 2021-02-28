@@ -3,6 +3,7 @@
 >This is a ReadMe to understand project info.
 
 ---
+
 ### Table Of Contents
 
 - [Description](#description)
@@ -10,6 +11,7 @@
 - [Technologies](#technonologies)
 
 ---
+
 ## Description
 
 In this project,  expected to determine a real-world problem and solve the problem by performing an architecture-centric software development including such activities as problem identification, requirements modeling, architectural design, generating code from the design decisions.
@@ -17,14 +19,18 @@ In this project,  expected to determine a real-world problem and solve the probl
 
 
 ### [Back To The Top](#Software-Architecture-for-Natural-Disaster)
+
 ---
+
 ## How to Use
 
 
 
 
 ### [Back To The Top](#Software-Architecture-for-Natural-Disaster)
+
 ---
+
 ## Techonologies
 
 - Techonology 1
@@ -32,6 +38,7 @@ In this project,  expected to determine a real-world problem and solve the probl
 
 
 ### [Back To The Top](#Software-Architecture-for-Natural-Disaster)
+
 ---
 
 
