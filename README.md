@@ -3,9 +3,9 @@
 ---
 ### Table Of Contents
 
--[Description](#description)
--[How to Use](#how-to-use)
--[Technologies](#technonologies)
+- [Description](#description)
+- [How to Use](#how-to-use)
+- [Technologies](#technonologies)
 
 ---
 ## Description
