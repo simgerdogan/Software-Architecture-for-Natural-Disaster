@@ -87,7 +87,7 @@ For the Task component, it is defined for the transportation and accommodation i
 
 The mock-up is given below:
 
-[](Screen%20Mock-up.xd)
+[XD](Screen%20Mock-up.xd)
 
 ---
 
