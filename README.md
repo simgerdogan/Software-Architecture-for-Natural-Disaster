@@ -8,6 +8,7 @@
 
 - [Description](#description)
 - [Process](#process)
+- [Model to Code Transformation Algorithm Specification](#model-to-code-transformation-algorithm-specification)
 - [Functional Requirements](#functional-requirements)
 - [Languages](#languages)
 
@@ -32,6 +33,18 @@ It makes and documents architectural design decisions from the structural, behav
 
 
 ### [Back To The Top](#Software-Architecture-for-Natural-Disaster)
+
+---
+
+## Model to Code Transformation Algorithm Specification 
+
+Interfaces were used to provide multiple inheritance..These interfaces are ShowInfo,Comminucation,Add.These interfaces implemented by some classes which used functions.Based on this,other components which will be included later ,can also take properties from related interfaces.
+
+Abstract classes are generally used to gather objects with common properties under one roof. Abstract classes that we appended are Task,CheckUserInfo. An abstract class can be extended using keyword "extends".An interface can be implemented using keyword "implements".
+
+The XCD software model is given below:
+
+[XCD model](Software%20Architect%20Model%20with%20XCD.txt)
 
 ---
 ## Functional Requirements
@@ -64,16 +77,6 @@ Task component's only provided port is defined for all indexes of the task array
 For the Task component, it is defined for the transportation and accommodation indexes of the Task array.The value of requestClick of type boolean in the Task component is defined false by default.As the communication protocol, requestClick expects the boolean to be true.If the task does not exist, nothing is done, but if it does, requestClick is returned false and it waits until it becomes true again.This shows the communication protocol.If the exception is not happening, still nothing should be done.
 
 
-
----
-
-## Model to Code Transformation Algorithm Specification 
-
-Interfaces were used to provide multiple inheritance..These interfaces are ShowInfo,Comminucation,Add.These interfaces implemented by some classes which used functions.Based on this,other components which will be included later ,can also take properties from related interfaces.
-
-Abstract classes are generally used to gather objects with common properties under one roof. Abstract classes that we appended are Task,CheckUserInfo. An abstract class can be extended using keyword "extends".An interface can be implemented using keyword "implements".
-
-[XCD modeling](Software%20Architect%20Model%20with%20XCD.txt)
 
 ---
 
