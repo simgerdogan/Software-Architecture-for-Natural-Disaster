@@ -73,7 +73,7 @@ Interfaces were used to provide multiple inheritance..These interfaces are ShowI
 
 Abstract classes are generally used to gather objects with common properties under one roof. Abstract classes that we appended are Task,CheckUserInfo. An abstract class can be extended using keyword "extends".An interface can be implemented using keyword "implements".
 
-![ ](Software%20Architect%20Model%20with%20XCD.txt)
+[XCD modeling](Software%20Architect%20Model%20with%20XCD.txt)
 
 ---
 
