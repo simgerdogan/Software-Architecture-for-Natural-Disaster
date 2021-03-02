@@ -67,6 +67,16 @@ For the Task component, it is defined for the transportation and accommodation i
 
 ---
 
+## Model to Code Transformation Algorithm Specification 
+
+Interfaces were used to provide multiple inheritance..These interfaces are ShowInfo,Comminucation,Add.These interfaces implemented by some classes which used functions.Based on this,other components which will be included later ,can also take properties from related interfaces.
+
+Abstract classes are generally used to gather objects with common properties under one roof. Abstract classes that we appended are Task,CheckUserInfo. An abstract class can be extended using keyword "extends".An interface can be implemented using keyword "implements".
+
+![ ](Software%20Architect%20Model%20with%20XCD.txt)
+
+---
+
 ## Languages
 
 - XCD ( formal software architecture modeling language)
