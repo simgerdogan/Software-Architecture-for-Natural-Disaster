@@ -11,6 +11,9 @@
 - [Model to Code Transformation Algorithm Specification](#model-to-code-transformation-algorithm-specification)
 - [Functional Requirements](#functional-requirements)
 - [Languages](#languages)
+- [Screen Mock-Up](#screen-mockup)
+
+
 
 ---
 
@@ -79,6 +82,15 @@ For the Task component, it is defined for the transportation and accommodation i
 
 
 ---
+
+## Screen Mock-Up
+
+The mock-up is given below:
+
+[](Screen%20Mock-up.xd)
+
+---
+
 
 ## Languages
 
